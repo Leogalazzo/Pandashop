@@ -2,14 +2,15 @@
 // 🧩 CONFIGURACIÓN INICIAL
 // ==========================================================
 const PRODUCTS = [
-  {id:'1',name:'Quilmes Bajo Cero 473ml',price:2500,image:'https://carrefourar.vtexassets.com/arquivos/ids/724085/7792798015290_02.jpg?v=638943243736070000',category:'Cervezas',isAlcohol:true,available:true,badge:'🔥 Oferta'},
-  {id:'2',name:'Budweiser 473ml',price:3000,image:'https://http2.mlstatic.com/D_929316-MLA95637489525_102025-C.jpg',category:'Cervezas',isAlcohol:true,available:true,badge:'🆕 Nuevo'},
+  {id:'1',name:'Quilmes Bajo Cero 473ml',price:2500,image:'https://carrefourar.vtexassets.com/arquivos/ids/724085/7792798015290_02.jpg?v=638943243736070000',category:'Cervezas',isAlcohol:true,available:true,badge:'Oferta'},
+  {id:'2',name:'Budweiser 473ml',price:3000,image:'https://http2.mlstatic.com/D_929316-MLA95637489525_102025-C.jpg',category:'Cervezas',isAlcohol:true,available:true,badge:'Nuevo'},
   {id:'3',name:'Coca Cola 1.5lts',price:2500,image:'https://acdn-us.mitiendanube.com/stores/001/144/141/products/coca-cola-15-litros-compra-online-en-colombia-exitocom1-84ca4402a6ae97030815868217747967-1024-1024.jpg',category:'Gaseosas',isAlcohol:false,available:true},
-  {id:'4',name:'Gancia 473ml',price:1500,image:'https://statics.dinoonline.com.ar/imagenes/full_600x600_ma/3071209_f.jpg',category:'Aperitivo',isAlcohol:true,available:false,badge:'❌ Sin stock'},
-  {id:'5',name:'Dr.Lemon 473ml',price:1100,image:'https://masonlineprod.vtexassets.com/arquivos/ids/287040/Aperitivo-Dr-Lemon-Cherry-Vodka-473ml-Dr-Lemon-Halloween-Cherry-473ml-1-37173.jpg?v=638224725919870000',category:'Aperitivo',isAlcohol:true,available:true,badge:'🔥 Oferta'},
-  {id:'6',name:'Monster 473ml',price:7900,image:'https://flaming.ar/wp-content/uploads/2022/08/Pedido-14.08-40-1-jpg.webp',category:'Energizantes',isAlcohol:false,available:true,badge:'🆕 Nuevo'},
-  {id:'7',name:'Cepita 1500CC',price:1300,image:'https://atomoconviene.com/atomo-ecommerce/55118-medium_default/jugo-p-beber-cepita-bot-durazno-1500-cc--.jpg',category:'Jugos',isAlcohol:false,available:true},
-  {id:'8',name:'Agua Villavicencio 500ml',price:1800,image:'https://jumboargentina.vtexassets.com/arquivos/ids/795828-800-600?v=638313501973800000&width=800&height=600&aspect=true',category:'Agua',isAlcohol:false,available:true}
+  {id:'4',name:'Gancia 473ml',price:1500,image:'https://statics.dinoonline.com.ar/imagenes/full_600x600_ma/3071209_f.jpg',category:'Aperitivo',isAlcohol:true,available:false,badge:'Sin stock'},
+  {id:'5',name:'Dr.Lemon 473ml',price:1100,image:'https://masonlineprod.vtexassets.com/arquivos/ids/287040/Aperitivo-Dr-Lemon-Cherry-Vodka-473ml-Dr-Lemon-Halloween-Cherry-473ml-1-37173.jpg?v=638224725919870000',category:'Aperitivo',isAlcohol:true,available:true,badge:'Oferta'},
+  {id:'6',name:'Monster 473ml',price:7900,image:'https://flaming.ar/wp-content/uploads/2022/08/Pedido-14.08-40-1-jpg.webp',category:'Energizantes',isAlcohol:false,available:true,badge:'Nuevo'},
+  {id:'7',name:'Amstel 473ml',price:2200,image:'https://carrefourar.vtexassets.com/arquivos/ids/417336-170-170',category:'Cervezas',isAlcohol:true,available:true,badge:'Nuevo'},
+  {id:'8',name:'Cepita 1500CC',price:1300,image:'https://atomoconviene.com/atomo-ecommerce/55118-medium_default/jugo-p-beber-cepita-bot-durazno-1500-cc--.jpg',category:'Jugos',isAlcohol:false,available:true},
+  {id:'9',name:'Agua Villavicencio 500ml',price:1800,image:'https://jumboargentina.vtexassets.com/arquivos/ids/795828-800-600?v=638313501973800000&width=800&height=600&aspect=true',category:'Agua',isAlcohol:false,available:true}
 ];
 
 const WHATSAPP_PHONE = '5493644539325'; // ← Reemplazar con número real
@@ -300,3 +301,4 @@ function applyAgeRestriction(value){
 // 🧮 UTILIDADES
 // ==========================================================
 function formatNumber(n){ return new Intl.NumberFormat('es-AR').format(Math.round(n)); }
+
