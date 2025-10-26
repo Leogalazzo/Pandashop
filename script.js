@@ -8,7 +8,7 @@ const PRODUCTS = [
   {id:'4',name:'Gancia 473ml',price:1500,image:'https://statics.dinoonline.com.ar/imagenes/full_600x600_ma/3071209_f.jpg',category:'Aperitivo',isAlcohol:true,available:false,badge:'Sin stock'},
   {id:'5',name:'Dr.Lemon 473ml',price:1100,image:'https://masonlineprod.vtexassets.com/arquivos/ids/287040/Aperitivo-Dr-Lemon-Cherry-Vodka-473ml-Dr-Lemon-Halloween-Cherry-473ml-1-37173.jpg?v=638224725919870000',category:'Aperitivo',isAlcohol:true,available:true,badge:'Oferta'},
   {id:'6',name:'Monster 473ml',price:7900,image:'https://flaming.ar/wp-content/uploads/2022/08/Pedido-14.08-40-1-jpg.webp',category:'Energizantes',isAlcohol:false,available:true,badge:'Nuevo'},
-  {id:'7',name:'Amstel 473ml',price:2200,image:'https://carrefourar.vtexassets.com/arquivos/ids/417336-170-170',category:'Cervezas',isAlcohol:true,available:true,badge:'Nuevo'},
+  {id:'7',name:'Amstel 473ml',price:2200,image:'https://ardiaprod.vtexassets.com/arquivos/ids/330268/Cerveza-Lager-Amstel-473-Ml-_1.jpg?v=638599646788930000',category:'Cervezas',isAlcohol:true,available:true,badge:'Nuevo'},
   {id:'8',name:'Cepita 1500CC',price:1300,image:'https://atomoconviene.com/atomo-ecommerce/55118-medium_default/jugo-p-beber-cepita-bot-durazno-1500-cc--.jpg',category:'Jugos',isAlcohol:false,available:true},
   {id:'9',name:'Agua Villavicencio 500ml',price:1800,image:'https://jumboargentina.vtexassets.com/arquivos/ids/795828-800-600?v=638313501973800000&width=800&height=600&aspect=true',category:'Agua',isAlcohol:false,available:true}
 ];
@@ -98,6 +98,7 @@ function render(list){
       const rect = e.target.getBoundingClientRect();
       animateToCart(p.image, rect.left, rect.top);
       addToCart(p);
+      showToast("Producto agregado al carrito 🛒");
     };
     grid.appendChild(card);
   });
@@ -116,7 +117,7 @@ function openModal(p) {
   document.getElementById("modalCategory").textContent = p.category + (p.isAlcohol ? " · 18+" : "");
   document.getElementById("modalPrice").textContent = "$" + formatNumber(p.price);
   const addBtn = document.getElementById("modalAddBtn");
-  addBtn.onclick = () => { addToCart(p); closeModal(); };
+  addBtn.onclick = () => { addToCart(p); closeModal(); showToast("Producto agregado al carrito 🛒"); };
 }
 function closeModal() {
   const modal = document.getElementById("productModal");
@@ -157,7 +158,15 @@ window.toggleCart = (open)=>{
   const d=document.getElementById('cartDrawer');
   d.classList.toggle('open', !!open);
   d.setAttribute('aria-hidden', !open);
+
+  // 🚫 Bloquea el scroll del fondo al abrir el carrito
+  if (open) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+  }
 }
+
 window.clearCart = ()=>{ window.__PANDA_STATE__.cart = []; saveCart(); updateCartUI(); }
 function updateCartUI(){
   const cart = window.__PANDA_STATE__.cart;
@@ -207,7 +216,6 @@ window.checkoutWhatsApp = () => {
   const method = document.getElementById("buyerMethod").value;
   const notes = document.getElementById("buyerNotes").value.trim();
 
-  // 🔹 Validación de campos obligatorios
   if (!name || !address) {
     alert("Por favor, completá tu nombre y dirección antes de enviar el pedido 📦");
     return;
@@ -232,23 +240,17 @@ window.checkoutWhatsApp = () => {
   const text = encodeURIComponent(lines.join("\n"));
   const url = `https://wa.me/${WHATSAPP_PHONE}?text=${text}`;
 
-  // 🔹 Abrir WhatsApp
   window.open(url, "_blank");
-
-  // 🔹 Vaciar carrito y actualizar UI
   window.__PANDA_STATE__.cart = [];
   saveCart();
   updateCartUI();
-
-  // 🔹 Limpiar formulario
   document.getElementById("buyerName").value = "";
   document.getElementById("buyerAddress").value = "";
   document.getElementById("buyerNotes").value = "";
 };
 
-
 // ==========================================================
-// 🔞 VERIFICACIÓN DE EDAD (sin bloqueo permanente)
+// 🔞 VERIFICACIÓN DE EDAD
 // ==========================================================
 function showAgeGate(){ document.getElementById('ageBackdrop').classList.add('show'); }
 function hideAgeGate(){ document.getElementById('ageBackdrop').classList.remove('show'); }
@@ -261,7 +263,7 @@ window.acceptAge = ()=>{
 
 window.denyAge = ()=>{ 
   hideAgeGate(); 
-  applyAgeRestriction('0'); // No guardamos nada para no bloquearlo
+  applyAgeRestriction('0'); 
 }
 
 // ==========================================================
@@ -274,7 +276,7 @@ function applyAgeRestriction(value){
     render(noAlcohol);
 
     const search = document.getElementById('search');
-    search.placeholder = "Buscar productos sin alcohol...";
+    search.placeholder = "¿Qué tomamos?";
     search.oninput = () => {
       const q = search.value.trim().toLowerCase();
       const filtered = noAlcohol.filter(p => p.name.toLowerCase().includes(q));
@@ -298,7 +300,17 @@ function applyAgeRestriction(value){
 }
 
 // ==========================================================
+// 🧾 AVISO TOAST
+// ==========================================================
+function showToast(message) {
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 1800);
+}
+
+// ==========================================================
 // 🧮 UTILIDADES
 // ==========================================================
 function formatNumber(n){ return new Intl.NumberFormat('es-AR').format(Math.round(n)); }
-
