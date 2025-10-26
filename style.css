@@ -111,10 +111,31 @@
     .drawer.open{right:0;transform:translateX(0)}
     .drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px;border-bottom:1px solid #1a1a1a}
     .drawer-header h3{margin:0;font-size:16px}
-    .drawer-body{padding:14px;overflow:auto;display:flex;flex-direction:column;gap:12px}
+  .drawer-body {
+  flex: 1;
+  padding: 14px;
+  display: block; /* ✅ evita conflictos con flex internos */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  height: auto;
+  max-height: none; /* ✅ deja que el body crezca naturalmente */
+}
+
     .cart-item{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;border:1px solid #1d1e20;background:#121316;border-radius:12px;padding:10px}
     .cart-item img{width:56px;height:56px;object-fit:cover;border-radius:10px}
-    .cart-footer{margin-top:auto;border-top:1px solid #1a1a1a;padding:14px;display:flex;flex-direction:column;gap:10px}
+    .cart-footer {
+  border-top: 1px solid #1a1a1a;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #0d0e10;
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+}
+
+
     .row{display:flex;align-items:center;justify-content:space-between}
     .cart-footer .row span{font-size:14px;color:#ccc}
     .cart-footer .row strong{font-size:18px;color:#fff}
@@ -219,3 +240,71 @@
   background: linear-gradient(90deg, #ff6b6b, #e94b4b);
   transform: translateY(-2px);
 }
+
+/* ANIMACIÓN AL CARRITO */
+.fly-img {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  object-fit: cover;
+  z-index: 1000;
+  pointer-events: none;
+  animation: flyToCart 0.9s ease-in-out forwards;
+}
+
+@keyframes flyToCart {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(0.6) translate(150px, -200px); /* 👉 hacia la derecha y arriba */
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0) translate(250px, -300px); /* destino más arriba a la derecha */
+    opacity: 0;
+  }
+}
+
+/* AVISO DE PRODUCTO AGREGADO */
+/* AVISO DE PRODUCTO AGREGADO */
+.toast {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-40px);
+  background: rgba(255, 255, 255, 0.95);
+  color: #111;
+  padding: 12px 26px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  z-index: 2000;
+  opacity: 0;
+  animation: toastDrop 1.8s ease forwards;
+  white-space: nowrap; /* ✅ evita salto de línea */
+  max-width: 90vw; /* asegura que no se salga de pantalla */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@keyframes toastDrop {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-60px);
+  }
+  20%, 80% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+}
+
+
+
